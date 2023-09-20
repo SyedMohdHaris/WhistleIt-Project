@@ -4,17 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Teams;
 use App\Models\Users;
+use App\Models\UserTeam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class TeamsController extends Controller
 {
-    public function getTeam($id){
+    public function getTeamByMember($id){
 
         if (Users::where('id',$id)->exists()){
 
+            $user = Users::find($id); 
+
+            $teams = $user->teams;
             
+            if(!$teams){
+                return response()->json([
+                    'message' => 'User has no Teams'
+                ], 200);    
+            }
+            else{
+                return response()->json([
+                    'message' => 'Teams Fetched',
+                    'data' => $teams,
+                ], 200);
+            }
         }
+        else{
+            return response()->json([
+                'error'=>'Invalid Info'
+            ],500);
+        }
+
 
     }
 
@@ -24,7 +45,8 @@ class TeamsController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'adminId' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'workspaceId' => 'required'
         ]);
 
         if ($validator->fails()){
@@ -36,11 +58,20 @@ class TeamsController extends Controller
         $name = $request['name'];
         $adminId = $request['adminId'];
         $description = $request['description'];
+        $workspaceId = $request['workspaceId'];
 
         $team = Teams::create([
             'name' => $name,
             'adminId' => $adminId,
-            'description' => $description
+            'description' => $description,
+            'workspaceId' => $workspaceId
+        ]);
+
+        $teamId = $team->id;
+
+        $userTeams = UserTeam::create([
+            'userId' => $adminId,
+            'teamId' => $teamId
         ]);
         
         if(!$team){
@@ -89,8 +120,11 @@ class TeamsController extends Controller
             ], 500);
         }
         
-        //query to add user into team//
-        
+        $team = UserTeam::create([
+            'userId'=>$userId,
+            'teamId'=>$teamId
+        ]);
+
         if(!$team){
             return response()->json([
                 'error' => 'User Not Added'
@@ -121,17 +155,17 @@ class TeamsController extends Controller
             ], 500);
         }
         
-        //query to remove user into team//
-        
+        $team = UserTeam::where('userId',$userId)->where('teamId',$teamId)->first();
+
         if(!$team){
             return response()->json([
                 'error' => 'User Not Removed'
             ], 500);    
         }
         else{
+            $team->delete();
             return response()->json([
-                'message' => 'User Removed',
-                'data' => $team,
+                'message' => 'User Removed'
             ], 200);
         }
 
@@ -140,17 +174,21 @@ class TeamsController extends Controller
     public function getTeamMembers($id){
 
         if(Teams::where('id',$id)->exists()){
-            $members;//query to get all members
+            
+            $teams = Teams::find($id);
 
-            return response()->json([
-                'message' => 'Team Members Fetched',
-                'data' => $members
-            ], 200);
+            $users = $teams->users;
+
+            if ($users){
+                return response()->json([
+                    'message' => 'Team Members Fetched',
+                    'data' => $users
+                ], 200);
+            }
         }
         else{
             return response()->json([
-                'message' => 'Invalid TeamId',
-                'data' => $members
+                'message' => 'Invalid TeamId'
             ], 200);
 
         }
