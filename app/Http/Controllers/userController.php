@@ -48,9 +48,8 @@ class userController extends Controller
         Auth::logout();
         return 1;
     }
-    public  function showUsers(Request $request)
+    public  function showUsers()
     {
-
         return User::all();
 
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Workspace;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class workSpaceController extends Controller
 {
@@ -11,9 +12,11 @@ class workSpaceController extends Controller
 
     public function createWorkSpace(Request $request)
     {
+        $id = Auth::id();
         $workSpace=new Workspace();
         $workSpace->name=$request->name;
         $workSpace->description=$request->description;
+        $workSpace->ownerId=$id;
         $workSpace->save();
         return 1;
     }
@@ -23,9 +26,10 @@ class workSpaceController extends Controller
         
     
     }
-    public function deleteWorkSpace(Request $request)
+    public function deleteWorkSpace($id)
     {
-        $workSpace=Workspace::where('name',$request->input('name'))->get();
+        $workSpace=Workspace::where('id',$id)->get();
+        $workSpace->delete();
         return $workSpace;
     }
 }

@@ -15,26 +15,3 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get("/user",[userController::class,'register']);    
-Route::get("/login",[userController::class,'login']);
-Route::middleware(['auth'])->prefix('/user')->group(function ()
-{
-   
-
-Route::get("/logout",[userController::class,'logout']);
-Route::get("/show",[userController::class,'showUsers']);
-});
-
-
-
-Route::get('/add',[workSpaceController::class,'createWorkSpace']);
-Route::get('/show',[workSpaceController::class ,'showWorkSpace']);
-Route::get('/delete',[workSpaceController::class,'deletWorkSpace']);
-
-
-
-
