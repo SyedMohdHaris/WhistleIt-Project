@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\userController;
+use App\Http\Controllers\workSpaceController;
+use App\Models\Workspace;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +19,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get("/user",[userController::class,'register']);    
+Route::get("/login",[userController::class,'login']);
+Route::middleware(['auth'])->prefix('/user')->group(function ()
+{
+   
+
+Route::get("/logout",[userController::class,'logout']);
+Route::get("/show",[userController::class,'showUsers']);
+});
+
+
+
+Route::get('/add',[workSpaceController::class,'createWorkSpace']);
+Route::get('/show',[workSpaceController::class ,'showWorkSpace']);
+Route::get('/delete',[workSpaceController::class,'deletWorkSpace']);
+
+
+
+

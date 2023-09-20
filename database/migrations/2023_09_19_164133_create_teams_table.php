@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         
             $table->foreign('adminId')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('workspaceId')->references('id')->on('workspace')->onDelete('cascade');
+            $table->foreign('workspaceId')->references('id')->on('workspaces')->onDelete('cascade');
         
         });
     }
