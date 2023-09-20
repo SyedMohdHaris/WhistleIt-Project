@@ -68,7 +68,7 @@ class workSpaceController extends Controller
 
 
     }
-    public function deleteWorkSpace($id)
+    public function deleteWorkSpace(Request $request)
     {
         $workSpace = Workspace::where('name', $request->input('name'))->get();
         if ($workSpace) {
@@ -92,9 +92,6 @@ class workSpaceController extends Controller
             $request->all(),
             [
                 'email' => 'required',
-
-
-
             ]
         );
         if ($validator->fails()) {
@@ -110,13 +107,12 @@ class workSpaceController extends Controller
         $work_id = User::Select('workspaceId')->where('id', $id)->get();
         $user = User::Select('id', 'workspaceId')->where('email', $email)->first();
 
+        if ($user) {
+            
+            if ($user['workspaceId']==null) {
 
-        if ($user->id != $id) {
-            if ($user) {
                 //  return $work_id[0]['workspaceId'];
                 if ($work_id[0]['workspaceId'] != null) {
-
-
                     $user->update(['workspaceId' => $work_id[0]['workspaceId']]);
                     if ($user) {
                         return response()->json([
@@ -138,13 +134,13 @@ class workSpaceController extends Controller
                 }
             } else {
                 return response()->json([
-                    'error' => 'WorkSpace Not found'
+                    'error' => 'ALready in WorkSpace'
 
                 ], 200);
             }
         } else {
             return response()->json([
-                'error' => 'ALready in WorkSpace'
+                'error' => 'User Not found'
 
             ], 500);
 

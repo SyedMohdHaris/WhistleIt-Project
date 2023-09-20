@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('workspaces', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("owner")->nullable(true);
-            $table->string("name")->nullable(false);
+            $table->string("name")->nullable(false)->unique();
             $table->string('description')->nullable((false));
             $table->timestamps();
 

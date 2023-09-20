@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 //Routes to manage Teams
 
@@ -48,35 +48,35 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/user',[userController::class,'register']);    
-Route::post('/login',[userController::class,'login'])->name('login');
-Route::middleware(['auth'])->prefix('/user')->group(function ()
-{
+// Route::post('/user',[userController::class,'register']);    
+// Route::post('/login',[userController::class,'login'])->name('login');
+// Route::middleware(['auth'])->prefix('/user')->group(function ()
+// {
    
-});
-Route::get("/show",[userController::class,'showUsers']);
-Route::post("/logout",[userController::class,'logout']);
+// });
+// Route::get("/show",[userController::class,'showUsers']);
+// Route::post("/logout",[userController::class,'logout']);
 
 
-//Routes to manage Workspace
+// //Routes to manage Workspace
 
-Route::post('/workspace',[workSpaceController::class,'createWorkSpace']);
-Route::get('/workspace',[workSpaceController::class ,'showWorkSpace']);
-Route::delete('/workspace/{id}',[workSpaceController::class,'deletWorkSpace']);
-
-
-//Routes to manage messages
-
-Route::post('/messages',[MessageController::class,'addMessage']);
-Route::delete('/messages',[MessageController::class,'deleteMessage']);
-Route::get('/messages/channel/{id}',[MessageController::class,'getMessageChannel']);
-Route::get('/messages/chat/{id}',[MessageController::class,'getMessageChat']);
+// Route::post('/workspace',[workSpaceController::class,'createWorkSpace']);
+// Route::get('/workspace',[workSpaceController::class ,'showWorkSpace']);
+// Route::delete('/workspace/{id}',[workSpaceController::class,'deletWorkSpace']);
 
 
-//Routes to manage CHat Friends
+// //Routes to manage messages
 
-Route::post('/friends',[FriendsController::class,'addMessageFriend']);
-Route::get('/friends',[FriendsController::class,'getAllFriends']);
+// Route::post('/messages',[MessageController::class,'addMessage']);
+// Route::delete('/messages',[MessageController::class,'deleteMessage']);
+// Route::get('/messages/channel/{id}',[MessageController::class,'getMessageChannel']);
+// Route::get('/messages/chat/{id}',[MessageController::class,'getMessageChat']);
+
+
+// //Routes to manage CHat Friends
+
+// Route::post('/friends',[FriendsController::class,'addMessageFriend']);
+// Route::get('/friends',[FriendsController::class,'getAllFriends']);
 
 
 
