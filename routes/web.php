@@ -25,7 +25,7 @@ Route::middleware(['auth'])->prefix('/user')->group(function ()
 {
    
 
-Route::get("/logout",[userController::class,'logout']);
+Route::post("/logout",[userController::class,'logout']);
 Route::get("/show",[userController::class,'showUsers']);
 });
 
@@ -34,7 +34,7 @@ Route::get("/show",[userController::class,'showUsers']);
 Route::get('/add',[workSpaceController::class,'createWorkSpace']);
 Route::get('/show',[workSpaceController::class ,'showWorkSpace']);
 Route::get('/delete',[workSpaceController::class,'deletWorkSpace']);
-
+Route::get('/addmembers',[workSpaceController::class,'assignMembers']);
 
 
 
