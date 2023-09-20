@@ -68,7 +68,7 @@ class workSpaceController extends Controller
 
 
     }
-    public function deleteWorkSpace(Request $request)
+    public function deleteWorkSpace($id)
     {
         $workSpace = Workspace::where('name', $request->input('name'))->get();
         if ($workSpace) {

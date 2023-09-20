@@ -87,7 +87,7 @@ class userController extends Controller
         ],200);
     
     }
-    public  function showUsers(Request $request)
+    public  function showUsers()
     {
 
          $user=User::all();
