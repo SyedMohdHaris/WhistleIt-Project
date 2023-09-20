@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/teams',[TeamsController::class,'addTeam']);
+Route::delete('/teams/{id}',[TeamsController::class,'removeTeam']);
+Route::post('/teams/member',[TeamsController::class,'addTeamMember']);
+Route::delete('/teams/member',[TeamsController::class,'removeTeamMember']);
+Route::get('/team/member/{id}',[TeamsController::class,'getTeamMembers']);
+
