@@ -44,7 +44,9 @@ Route::middleware('auth')->prefix('/teams')->group(function ()
     Route::get('/members',[TeamsController::class,'addTeamMember']);
     Route::get('/remove',[TeamsController::class,'removeTeamMember']);
     Route::get('/getMembers',[TeamsController::class,'getTeamMembers']);
+    // Route::get('/getTeams',[TeamsController::class,'getTeams']);
 });
+Route::get('/getTeams',[TeamsController::class,'getTeams']);
 
 
 

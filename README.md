@@ -141,3 +141,15 @@
 
 
 ##### Return all team memebers
+
+#### GET Teams
+```http
+  GET /teams//getTeams
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+
+
+
+##### Return all team 

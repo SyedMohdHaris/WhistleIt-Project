@@ -196,6 +196,10 @@ class TeamsController extends Controller
             ], 500);
         }
     }
+    public function getTeams()
+    {
+        return Teams::select('name','description')->get();
+    }
 
     public function getTeamMembers(Request $request)
     {
@@ -231,4 +235,6 @@ class TeamsController extends Controller
 
         }
     }
+
+
 }
