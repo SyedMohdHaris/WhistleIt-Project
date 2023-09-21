@@ -74,7 +74,7 @@
 
 ##### Return all workSpace if allowed
 
-#### Show WorkSpace
+#### Show WorkSpacet
 ```http
   GET workSpace/addmembers
 ```
@@ -108,3 +108,36 @@
 | `teamMemberEmail`      | `email` | **Required** user email want to added|
 | `teamid`      | `id` | **Required**  team id|
 
+#### Add Memebers
+```http
+  GET /teams/memebers
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `teamMemberEmail`      | `email` | **Required** user email want to added|
+| `teamid`      | `id` | **Required**  team id|
+
+
+#### Remove Memebers
+```http
+  GET /teams/remove
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `MemberEmail`      | `email` | **Required** user email want to remove|
+| `teamid`      | `id` | **Required**  team id|
+
+
+#### GET Memebers
+```http
+  GET /teams/memebers
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `id` | **Required** Team id want to fetched|
+
+
+##### Return all team memebers

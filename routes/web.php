@@ -22,10 +22,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::post("/user",[userController::class,'register']);    
-Route::get("/login",[userController::class,'login']);
+Route::post("/login",[userController::class,'login']);
 Route::middleware(['auth'])->prefix('/user')->group(function ()
 {
-Route::get("/logout",[userController::class,'logout']);
+Route::post("/logout",[userController::class,'logout']);
 Route::get("/show",[userController::class,'showUsers']);
 Route::get("/delete",[userController::class,'delete_users']);
 });
@@ -38,8 +38,16 @@ Route::middleware('auth')->prefix('/workSpace')->group(function ()
     Route::get('/delete',[workSpaceController::class,'deletWorkSpace']);
     Route::get('/addmembers',[workSpaceController::class,'assignMembers']);
 });
-Route::get('/teams',[TeamsController::class,'addTeam']);
-Route::get('/teams/members',[TeamsController::class,'addTeamMember']);
+Route::middleware('auth')->prefix('/teams')->group(function ()
+{
+    Route::get('',[TeamsController::class,'addTeam']);
+    Route::get('/members',[TeamsController::class,'addTeamMember']);
+    Route::get('/remove',[TeamsController::class,'removeTeamMember']);
+    Route::get('/getMembers',[TeamsController::class,'getTeamMembers']);
+});
+
+
+
 Route::middleware('auth')->prefix('/requests')->group(function ()
 {
 

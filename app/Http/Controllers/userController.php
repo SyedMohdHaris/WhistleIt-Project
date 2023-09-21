@@ -15,7 +15,7 @@ class userController extends Controller
 
     public function register(Request $request)
     {
-
+           
 
         $validator = Validator::make(
             $request->all(),
@@ -26,6 +26,7 @@ class userController extends Controller
 
             ]
         );
+        // return $request->input("input");
         if ($validator->fails()) {
             return response()->json([
                 'error' => 'Invalid info'
@@ -43,6 +44,8 @@ class userController extends Controller
             return response()->json([
                 'msg' => 'User Created'
 
+            
+                
             ], 500);
 
         } else {
