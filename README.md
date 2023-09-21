@@ -84,4 +84,27 @@
 | `email`      | `email` | **Required**|
 
 
-##### 
+## Teams
+
+#### Create Teams
+```http
+  GET /teams
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `name`      | `string` | **Required** Team Name|
+| `adminEmail`      | `email` | **Required** user email of admin|
+| `description`      | `string` | **Required**|
+| `workSpace`      | `string` | **Required** Name of workSpace|
+
+#### Add Memebers
+```http
+  GET /teams/memebers
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `teamMemberEmail`      | `email` | **Required** user email want to added|
+| `teamid`      | `id` | **Required**  team id|
+
