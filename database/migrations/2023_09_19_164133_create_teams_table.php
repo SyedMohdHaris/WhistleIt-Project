@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(false);
+            $table->string('name')->nullable(false)->unique();
             $table->unsignedBigInteger('adminId');
             $table->string('description')->nullable(false);
             $table->unsignedBigInteger('workspaceId');
