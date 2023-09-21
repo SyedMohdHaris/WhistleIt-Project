@@ -153,3 +153,45 @@
 
 
 ##### Return all team 
+
+
+## Channels
+#### Create Channels
+```http
+  GET /channel
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email`      | `email` | **Required** user email|
+| `channelId`      | `id` | **Required**  channel id|
+
+#### Add Memebers 
+```http
+  GET /channel/addMemeber
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email`      | `email` | **Required** user email who |
+| `channelId`      | `id` | **Required**  channel id|
+
+#### Remove Memebers 
+```http
+  GET /channel/removeMember
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `email`      | `email` | **Required** user email|
+| `channelId`      | `id` | **Required**  channel id|
+
+
+#### Get Memebers 
+```http
+  GET /channel/getMembers
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `channelId`      | `id` | **Required** |

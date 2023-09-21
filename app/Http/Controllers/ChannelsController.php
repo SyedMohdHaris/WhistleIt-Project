@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Channels;
 use App\Models\Teams;
+use App\Models\User;
 use App\Models\UserChannel;
 use App\Models\Users;
 use Illuminate\Http\Request;
@@ -64,35 +65,41 @@ class ChannelsController extends Controller
         }
     }
 
-    public function addChannel(Request $request,$teamId)
+    public function addChannel(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'description' => 'required',
-            'ownerId' => 'required'
+            'adminEmail' => 'required',
+            'teamName' => 'required',
         ]);
 
-        if ($validator->fails() || !(Channels::where('teamId', $teamId)->exists()) ){
+        if ($validator->fails() ){
             return response()->json([
                 'error' => 'Invalid Info'
             ], 500);
         }
+
+        $team=Teams::Select("id")->where("name",$request->input("teamName"))->first();
+        $adminId=User::Select("id")->where("email",$request->input('adminEmail'))->first();
+    //    return $adminId->id;
+        if($team and $adminId)
+        {
+         $name = $request->input('name');
+         $description = $request->input('description');
         
-        $name = $request['name'];
-        $description = $request['description'];
-        $ownerId = $request['ownerId'];
 
         $channel = Channels::create([
             'name' => $name,
-            'teamId' => $teamId,
+            'teamId' => $team->id,
             'description' => $description,
-            'ownerId' => $ownerId
+            'owner' => $adminId->id,
         ]);
 
         $channelId = $channel->id;
 
         UserChannel::create([
-            'userId' => $ownerId,
+            'userId' => $adminId->id,
             'channelId' => $channelId
         ]);
         
@@ -107,6 +114,7 @@ class ChannelsController extends Controller
                 'data' => $channel,
             ], 200);
         }
+    }
     }
 
     public function removeChannel($id){
@@ -130,24 +138,29 @@ class ChannelsController extends Controller
 
     public function addChannelMember(Request $request){
 
+
         $validator = Validator::make($request->all(), [
-            'userId' => 'required',
+            'email' => 'required',
             'channelId' => 'required'
         ]);
 
-        $userId = $request('userId');
-        $channelId = $request('channelId');
+        $email = $request->input('email');
+        $channelId = $request->input('channelId');
+       
  
-        if($validator->fails() || !(Users::where('id', $userId)->exists()) || !(Channels::where('id', $channelId)->exists())){
+        if($validator->fails() || !(Users::where('email', $email)->exists()) || !(Channels::where('id', $channelId)->exists())){
             
             return response()->json([
                 'error' => 'Invalid Info'
             ], 500);
         }
-        
+
+       
+        $userId=User::Select("id")->where("email",$email)->first();
+    
         $channel = UserChannel::create([
-            'userId'=>$userId,
-            'teamId'=>$channelId
+            'userId'=>$userId->id,
+            'channelId'=>$channelId
         ]);
 
         if(!$channel){
@@ -166,21 +179,25 @@ class ChannelsController extends Controller
 
     public function removeChannelMember(Request $request){
 
+       
         $validator = Validator::make($request->all(), [
-            'userId' => 'required',
+            'email' => 'required',
             'channelId' => 'required'
         ]);
 
-        $userId = $request('userId');
-        $channelId = $request('channelId');
- 
-        if($validator->fails() || !(Channels::where('channelId', $channelId)->exists()) || !(Users::where('id', $userId)->exists()) ){
+
+        $email = $request->input('email');
+        $channelId = $request->input('channelId');
+
+     
+        if($validator->fails()  || !(Channels::where('id', $channelId)->exists()) || !(Users::where('email', $email)->exists())){
             return response()->json([
                 'error' => 'Invalid Info'
             ], 500);
         }
+        $userId=User::Select("id")->where("email",$email)->first();
         
-        $channel = UserChannel::where('userId',$userId)->where('channelId',$channelId)->first();
+        $channel = UserChannel::where('userId',$userId->id)->where('channelId',$channelId)->first();
 
         if(!$channel){
             return response()->json([
@@ -197,13 +214,23 @@ class ChannelsController extends Controller
     }
 
 
-    public function getChannelMembers($id){
-
+    public function getChannelMembers(Request $request){
+        $validator = Validator::make($request->all(), [
+            'channelId' => 'required',
+        
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'error' => 'Invalid Info'
+            ], 500);
+        }
+        $id=$request->input("channelId");
         if(Channels::where('id',$id)->exists()){
             
-            $channels = Channels::find($id);
+           
+        
 
-            $users = $channels->users;
+            $users =  User::Select("name","email")->join("user_channels",'users.id','userId')->where('channelId',$id)->get();
 
             if ($users){
                 return response()->json([

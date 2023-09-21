@@ -25,12 +25,12 @@ use Illuminate\Support\Facades\Route;
 
 //Routes to manage Teams
 
-Route::get('/teams/members/{id}',[TeamsController::class,'getTeamByMember']);
-Route::post('/teams',[TeamsController::class,'addTeam']);
-Route::delete('/teams/{id}',[TeamsController::class,'removeTeam']);
-Route::post('/teams/members',[TeamsController::class,'addTeamMember']);
-Route::delete('/teams/members',[TeamsController::class,'removeTeamMember']);
-Route::get('/members/teams/{id}',[TeamsController::class,'getTeamMembers']);
+// Route::get('/teams/members/{id}',[TeamsController::class,'getTeamByMember']);
+// Route::post('/teams',[TeamsController::class,'addTeam']);
+// Route::delete('/teams/{id}',[TeamsController::class,'removeTeam']);
+// Route::post('/teams/members',[TeamsController::class,'addTeamMember']);
+// Route::delete('/teams/members',[TeamsController::class,'removeTeamMember']);
+// Route::get('/members/teams/{id}',[TeamsController::class,'getTeamMembers']);
 
 //Routes to manage Channels
 

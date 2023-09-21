@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('channels', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable(false);
+            $table->string('name')->nullable(false)->unique();
             $table->string('description')->nullable(false);
             $table->unsignedBigInteger('owner');
             $table->unsignedBigInteger('teamId');

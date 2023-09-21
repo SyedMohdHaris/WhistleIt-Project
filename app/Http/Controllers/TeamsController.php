@@ -216,10 +216,10 @@ class TeamsController extends Controller
         }
 
         if (Teams::where('id', $request->id)->exists()) {
-
+             $id=$request->input('id');
             // $teams = Teams::find($request->id);
 
-            $users = User::Select("name","email")->join("user_teams",'users.id','userId')->where('teamId',1)->get();
+            $users = User::Select("name","email")->join("user_teams",'users.id','userId')->where('teamId',$id)->get();
         
 
             if ($users) {
